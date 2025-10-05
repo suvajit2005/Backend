@@ -16,12 +16,12 @@ console.log("Hello I am first");
 // hello world
 
 
-// (function (){
-//     console.log("Hello ji I am second");
+(function (){
+    console.log("Hello ji I am second");
 
-//     function sum(a,b){
-//     console.log(a+b);
-//     }
+    function sum(a,b){
+    console.log(a+b);
+    }
 
-//    sum(4,3);
-// })();
+   sum(4,3);
+})();
