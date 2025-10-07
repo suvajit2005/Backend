@@ -1,34 +1,40 @@
-// const fs = require('fs')
+// const http = require('http');
 
-// let a = 10;
-// let b = "Hello ji"
 
-// console.log(b);
+// const server = http.createServer((req,res)=>{
+    
+//     // res.end("Hello Coder Army");
 
-// function sum(a,b){
-//     return a+b;
-// }
+//     if(req.url==="/"){
+//         res.end("Hello Coder Army");
+//     }
+//     else if(req.url==="/contact"){
+//         res.end("This is our Contact Page")
+//     }
+//     else if(req.url==="/about"){
+//         res.end("This is our About Page")
+//     }
+//     else
+//     {
+//         res.end("Error: Page Not Found");
+//     }
+// });
 
-// const data = fs.readFileSync("./data.json", "utf-8");
-// console.log(data);
 
-// // fs.readFile("./data.json", "utf-8" ,(err,res)=>{
-// //     console.log(res);
-// // })
+// server.listen(4000, ()=>{
+//     console.log("I am Listening at port number 4000");
+// })
+///////////////////////////HOW TO BUILD SERVER//////////////////////////////////
 
-// setTimeout(()=>{
-//    console.log("Hello Time Out");
-// },3000)
+const http = require('http');
 
-// console.log(a);
-// console.log(sum(3,8));
-const fs=require('fs');
-const data=fs.readFileSync("./data.json","utf-8",(err,res)=>
-{
-    console.log(res)
-})
-console.log(data)
-setTimeout(()=>
-{
-    console.log("hello world");
-},)
+const server = http.createServer((req, res) => {
+    if (req.url === '/') {
+        //res.writeHead(200, { "Content-Type": "application/json" }); 
+        res.end({"name":"Rohit", "age":20, "money":70, "Mon":20});
+    }
+});
+
+server.listen(4000, () => {
+    console.log("hello brother i am listining you don't worry");
+});
