@@ -1,49 +1,53 @@
-// const hello = require('http');
+const express = require("express");
 
-// //  How to create a http server
-// //we import the node js predefined module 'http' that mainly used to acctept reqest, give responce, as well as connnect to other server and create server
+// 
+const app = express();
 
-// console.log("I am first");
+// "/detail"
+// "/contact/person"
+// "/detail/person"
+// "/about"
+// "/detail/home/10"
 
-// const server = hello.createServer((req,res)=>{
-//     // the above line we use to create the htttp server using node js
-   
-//     if(req.url==="/"){
-//         console.log(req.url)
-//         res.end("Hello BHAI");
-//     }
-//     else if(req.url==="/about"){
-//         console.log(req.url)
-//         res.end("This is about Page");
-//     }
-//     else if(req.url==="/contact")
-        
-//     {    console.log(req.url)
-//         res.end("Contact info of user")
-//     }
-//     else{
-//         res.end("Page not Found");
-//     }
-// });
+// ? char become Optional
+// + char can be repeated multiple times
+// * any number of character can arrive
+//  rohit_negi9
 
-// server.listen(2000, ()=>{
-//     console.log("Server running");
-//     // console.log(http)
-//     //console.log(server)
-// });
-
-// console.log("I am last");
-
-
-//////////////////////////////////////////////////////////////////////////////////
-
-const server=require('http');
-//const { request } = require('undici-types');
-const main=server.createServer((req, res)=>{
-    if(req.url=="/")
-        res.end("hello bhai")
+app.use("/about/:id", (req,res)=>{
+        console.log(req.params);
+        res.send({name:"Rohit", "age":20, "money":70, "Mon":20, req:`${req.params.id} bheja tha tu`});
 })
-main.listen(2000,()=>{
-    console.log("helllo hi")
+
+
+
+
+
+
+
+
+app.use("/about", (req,res)=>{
+    res.send({"name":"suvajit", "age":20, "money":70, "Mon":20});
 })
-//er diagram, entity, relation, key , er diagram to table , types of relation ship, entity types, function depenedency types, reflex, amstrong, normalizaion, minimization, 
+
+app.use("/contact", (req,res)=>{
+    res.send("I am your Contact Page");
+})
+
+app.use("/detail", (req,res)=>{
+    res.send("I am your Detail Page");
+})
+
+app.use("/", (req,res)=>{
+    res.send("I am Your Home Page");
+})
+
+
+
+
+app.listen(4000, ()=>{
+    console.log("Listening at port 4000");
+})
+
+
+
