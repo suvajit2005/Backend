@@ -1,83 +1,98 @@
 const express = require("express");
 const app = express();
+const {Auth} = require("./middleware/auth")
 
+// CRUD: Create Read update Delete
 
-const BookStore = [
-    {id:1,name:"Harry Potter", author:"DevFlux"},
-    {id:2, name:"Friends", author: "Vikas"},
-    {id:3 , name:"Nexus", author:"Rohit"},
-    {id:4 , name:"DSA", author:"Maharaj"},
-    {id:5, name:"Prem Kahani", author:"Rohan"},
-    {id:6, name:"Heloo", author: "Vikas"},
-]
+// Database: array
+
 
 app.use(express.json());
 
-// localhost:3000/book/3
+const FoodMenu = [
+    {id:1, food:"Chowmein", category:"veg", price:500},
+    {id:2, food:"Butter Naan", category:"veg", price:100},
+    {id:3, food:"Chicken", category:"non-veg", price:1000},
+    {id:4, food:"Mutton", category:"non-veg", price:1500},
+    {id:5, food:"Momo", category:"veg", price:300},
+    {id:6, food:"Chai", category:"veg", price:50},
+    {id:7, food:"Rajma", category:"veg", price:300},
+    {id:8, food:"Roti", category:"veg", price:20},
+    {id:9, food:"Lolipop", category:"non-veg", price:700},
+    {id:10, food:"Kebab", category:"non-veg", price:400},
+    {id:11, food:"paneer", category:"veg", price:800},
+    {id:12, food:"Egg Curry", category:"non-veg", price:300},
+    {id:13, food:"salad", category:"veg", price:100},
+    {id:14, food:"shourma", category:"veg", price:300},
+    {id:15, food:"Butter Chicken", category:"non-veg", price:900},
+    {id:16, food:"Mushroom", category:"veg", price:700},
+]
 
-app.get("/book", (req,res)=>{
-    console.log(req.query);
+const AddToCart = [];
+// user ka jo bhi food add hga, wo idhr jaayega
 
-    //const Book = BookStore.filter(info => info.author === req.query.author);
-    res.send(BookStore);
+
+app.get("/food", (req,res)=>{
+    res.status(200).send(FoodMenu);
 })
 
-app.get("/book/:id", (req,res)=>{
 
+// Authenticate admin here
+// app.use("/admin",Auth)
+
+
+app.post("/admin", Auth, (req,res)=>{
+
+    
+    FoodMenu.push(req.body);
+    res.status(201).send("Item Added Succesfully");
+    
+
+})
+
+app.delete("/admin/:id", Auth, (req,res)=>{
+    
     const id = parseInt(req.params.id);
-    // console.log(typeof req.params.id)
-    const Book =  BookStore.find(info=> info.id===id);
-    res.send(Book); 
+
+    const index = FoodMenu.findIndex(item => item.id ===id);
+
+        if(index===-1){
+           res.send("Item Doesn't Exist");
+        }
+        else{
+            FoodMenu.splice(index,1);
+            res.send("Succesfully Deleted");
+        }
+    
+    
 })
 
-app.post("/book", (req,res)=>{
-    console.log(req.body);
-    BookStore.push(req.body);
-    res.send("Data Saved Successfully");
-})
-
-app.patch("/book", (req,res)=>{
-    console.log(req.body);
-
-   const Book = BookStore.find(info => info.id === req.body.id);
+app.patch("/admin", Auth, (req,res)=>{
    
-   if(req.body.author)
-   Book.author = req.body.author;
+        
+    const id = req.body.id;
 
-   if(req.body.name)
-   Book.name = req.body.name;
+    const fooddata = FoodMenu.find(item=> item.id===id);
 
-   res.send("Patch updated")
-})
+        if(fooddata){
+            
+            if(req.body.food)
+                fooddata.food = req.body.food;
+            if(req.body.category)
+                fooddata.category = req.body.category;
+            if(req.body.price)
+                fooddata.price = req.body.price;
 
+            res.send("Successfully Updated");
+        }
+        else{
+            res.send("Item not exist")
+        }
 
-app.put("/book", (req,res)=>{
-
-    const Book = BookStore.find(info => info.id === req.body.id);
-    
-    Book.author = req.body.author;
-    Book.name = req.body.name;
-
-    res.send("Changes Updated Succesfully");
-})
-
-app.delete("/book/:id", (req,res)=>{
-
-    const id = parseInt(req.params.id);
-    
- 
-    const index = BookStore.findIndex(info => info.id === id);
-    
-    console.log(index);
-    BookStore.splice(index,1);
-    res.send("Successfully Deleted");
 
 })
 
-
-
-
-
+// localhost:3000/admin
 
 
 
