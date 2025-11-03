@@ -143,8 +143,9 @@ app.get("/dummy",(req,res)=>{
 
     try{
     // JSON.parse({"name":"Rohit"});
-    throw new Error('BROKEN')
+    
     res.send("Hello Coder");
+    throw new Error('BROKEN')
     }
     catch(err){
         res.send("Some error Occured "+err);
